@@ -15,7 +15,7 @@ integrity over junk kilometers.
 ### Training Split
 - **Running Days:** Wednesday or Thursday, Saturday, Sunday.
 - **Structural Days:** Monday, Tuesday, Friday.
-    - *Focus:* Isometría Sóleo + Core + Glúteo.
+    - *Focus:* Isometrics / Core / Soleous / Glutes.
 
 ## 📊 Open Data
 All training data is synced from **Garmin** and **Technogym**. 
