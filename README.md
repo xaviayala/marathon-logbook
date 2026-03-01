@@ -1,6 +1,6 @@
 # The Pain-Free Protocol: Sub-1:30 Half & Sub-3:15 Marathon at 45+
 
-This is an open-source "Bitacro" documenting a 10kg weight loss and elite performance 
+This is an open-source Logbook documenting a 10kg weight loss and elite performance 
 gains without injury or "suffering." 
 
 ## 🏃 Performance Baseline
