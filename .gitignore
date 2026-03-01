@@ -1,0 +1,5 @@
+# Ignore private raw data and system files
+.DS_Store
+__pycache__/
+data/*.fit
+data/*.tcx

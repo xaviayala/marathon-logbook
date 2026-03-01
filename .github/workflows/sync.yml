@@ -1,0 +1,28 @@
+name: Training Factory
+on:
+  push:
+    paths:
+      - 'data/*.csv'
+jobs:
+  run-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with: { python-version: '3.10' }
+      - name: Install Tools
+        run: pip install pandas google-generativeai
+      - name: Generate Reports
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python scripts/generate_markdowns.py
+          python scripts/generate_report.py
+      - name: Save to Web
+        run: |
+          git config --global user.name "Training Bot"
+          git config --global user.email "bot@github.com"
+          git add .
+          git commit -m "Automated update" || exit 0
+          git push

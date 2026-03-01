@@ -1,0 +1,28 @@
+# 🏃 Long Run: [Route/Session Name]
+**Date:** 2026-02-28
+**Phase:** [e.g., Marathon Build-Up / Base Maintenance]
+
+## 📊 Quantitative Data (Metric)
+- **Distance:** ____ km
+- **Target Pace:** ____ min/km
+- **Actual Pace:** ____ min/km
+- **Avg Heart Rate:** ____ bpm
+- **Shoe Rotation:** [e.g., Alphafly / Saucony Endorphin]
+- **Surface:** [Road / Technogym Treadmill]
+
+## 🧘 Structural Integrity (The "Pain-Free" Proof)
+- **Pre-Run Activation:** [ ] 5 min Soleus Iso | [ ] Glute Medius Bridges
+- **Pain Score (Start):** 0/10
+- **Pain Score (Finish):** 0/10
+- **Post-Run "Soreness" Prediction:** [Low / None / Target Area]
+
+## 🧠 Qualitative Notes (For Gemini Analysis)
+*Describe the sensation of the pace. Was it 'labored' or 'fluid'?*
+- **The "No Suffering" Check:** (e.g., "At 18km, breathing was steady, legs felt snappy, no knee/hip discomfort.")
+- **Nutrition/Fueling:** [e.g., 60g Carbs/hr]
+- **Weight Check:** Current Weight: ____ kg (Target: Maintenance after -10kg loss)
+
+## 🛠 Integration Check
+- [ ] Garmin Data Exported to `/data`
+- [ ] Technogym Sync Verified
+- [ ] Soleus Isometrics scheduled for Monday/Tuesday (Recovery)
