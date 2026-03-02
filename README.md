@@ -10,7 +10,7 @@ This is an open-source performance laboratory documenting the intersection of **
 
 ## 🎯 The Mission
 * **Primary Goal:** Break **3:15:00** (Full Marathon) & **1:30:00** (Half Marathon).
-* **The Constraint:** Zero injury. Strictly **0/10 Pain Score** at all times.
+* **The Constraint:** Zero injury. Non-negotiable: Pain Score must remain strictly at **3/10 or lower** at all times.
 * **Weight Status:** **-10kg** achieved (focus shifted to power-to-weight efficiency).
 
 ## 🗓️ The "Durability" Training Split
