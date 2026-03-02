@@ -38,6 +38,13 @@ def update_sidebar():
         title = log_type.capitalize()
         sidebar_content.append(f"\n* **{title} Logbook**")
         target_dir = os.path.join(LOGS_ROOT, log_type)
+
+        # --- ADD DEBUG LINES HERE ---
+        print(f"🔍 DEBUG: Checking {target_dir}")
+        print(f"   -> Exists: {os.path.exists(target_dir)}")
+        if os.path.exists(target_dir):
+            print(f"   -> Files found: {os.listdir(target_dir)}")
+        # ----------------------------
         
         if os.path.exists(target_dir):
             files = sorted([f for f in os.listdir(target_dir) if f.endswith('.md')], reverse=True)
