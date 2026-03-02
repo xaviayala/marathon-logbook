@@ -1,4 +1,4 @@
-* [🏠 Project Home](README.md)
+* [🏠 Project Home](/)
 * [📊 Performance Dashboard](dashboard.md)
 * [🧠 Latest AI Audit](audit.md)
 * [🦴 Pain Scale Protocol](pain-scale.md)

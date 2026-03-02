@@ -1,3 +1,4 @@
+import shutil
 import os
 from datetime import datetime
 
@@ -9,11 +10,17 @@ HISTORY_DIR = os.path.join(DOCS_DIR, 'history')
 LOGS_ROOT = os.path.join(DOCS_DIR, 'logs')
 
 def update_sidebar():
+   # Sync Root README to a cleaner named file in /docs
+    root_readme = os.path.join(PROJECT_ROOT, 'README.md')
+    docs_home = os.path.join(DOCS_DIR, '_home.md') # Change name here
+    shutil.copy2(root_readme, docs_home)
+    print("🏠 Syncing Root README to /docs/_home.md")
+    
     sidebar_path = os.path.join(DOCS_DIR, '_sidebar.md')
     
     # 1. STATIC CORE SECTIONS
     sidebar_content = [
-        "* [🏠 Project Home](README.md)",
+        "* [🏠 Project Home](/)",
         "* [📊 Performance Dashboard](dashboard.md)",
         "* [🧠 Latest AI Audit](audit.md)",
         "* [🦴 Pain Scale Protocol](pain-scale.md)",
