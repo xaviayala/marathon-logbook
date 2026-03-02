@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 # Resolve paths relative to this script
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -18,12 +19,13 @@ def update_sidebar():
         "* [🦴 Pain Scale Protocol](pain-scale.md)",
         "",
         "* **Training Strategy**",
-        "  * [Pain-Free Methodology](METHODOLOGY.md)",
-        "  * [Soleus & Core Routine](RECOVERY.md)",
+        "  * [Pain-Free Methodology](methodology.md)",
+        "  * [Soleus & Core Routine](recovery.md)",
         ""
     ]
 
     # 2. DYNAMIC: PERFORMANCE AUDIT HISTORY
+    # Using a nested list structure for collapsing
     sidebar_content.append("* **Performance Audit History**")
     if os.path.exists(HISTORY_DIR):
         files = sorted([f for f in os.listdir(HISTORY_DIR) if f.endswith('.md')], reverse=True)
@@ -36,27 +38,24 @@ def update_sidebar():
     # 3. DYNAMIC: LOGBOOKS (Simplified & Detailed)
     for log_type in ['simplified', 'detailed']:
         title = log_type.capitalize()
-        sidebar_content.append(f"\n* **{title} Logbook**")
         target_dir = os.path.join(LOGS_ROOT, log_type)
-
-        # --- ADD DEBUG LINES HERE ---
-        print(f"🔍 DEBUG: Checking {target_dir}")
-        print(f"   -> Exists: {os.path.exists(target_dir)}")
-        if os.path.exists(target_dir):
-            print(f"   -> Files found: {os.listdir(target_dir)}")
-        # ----------------------------
         
+        # Determine file count for the label
+        count = 0
         if os.path.exists(target_dir):
             files = sorted([f for f in os.listdir(target_dir) if f.endswith('.md')], reverse=True)
-            if files:
-                for f in files:
-                    label = f.replace('.md', '')
-                    # Pathing: Docsify is in /docs, so it needs to go down to /logs
-                    sidebar_content.append(f"  * [{label}](logs/{log_type}/{f})")
-            else:
-                sidebar_content.append("  * *No logs found*")
+            count = len(files)
+        
+        # Header for the collapsible section
+        sidebar_content.append(f"\n* **{title} Logbook ({count})**")
+        
+        if count > 0:
+            for f in files:
+                label = f.replace('.md', '').replace('-run', '')
+                # Ensure exactly TWO spaces for the nested list
+                sidebar_content.append(f"  * [{label}](logs/{log_type}/{f})")
         else:
-            sidebar_content.append(f"  * [Archive](logs/{log_type}/)")
+            sidebar_content.append("  * *No logs found*")
 
     # 4. ATOMIC WRITE
     with open(sidebar_path, 'w', encoding='utf-8') as f:
@@ -65,7 +64,6 @@ def update_sidebar():
     print(f"✅ Sidebar successfully rebuilt at {datetime_now()}")
 
 def datetime_now():
-    from datetime import datetime
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 if __name__ == "__main__":
