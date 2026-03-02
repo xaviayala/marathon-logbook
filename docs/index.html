@@ -7,6 +7,46 @@
   
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
+
+  <style>
+    :root {
+      /* Barcelona Racing Identity */
+      --theme-color: #FF3E3E; 
+      --base-background: #0A0A0B;
+      --sidebar-background: rgba(20, 20, 22, 0.95);
+      --sidebar-width: 300px;
+      
+      /* Typography */
+      --base-font-family: 'Inter', -apple-system, sans-serif;
+      --heading-font-weight: 800;
+    }
+
+    /* Glassmorphism Sidebar */
+    .sidebar {
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+    }
+
+    /* Racing Red Hover Effects */
+    .sidebar-nav li a:hover {
+      color: var(--theme-color) !important;
+      border-right: 3px solid var(--theme-color);
+      background: linear-gradient(90deg, transparent, rgba(255, 62, 62, 0.05));
+    }
+
+    /* Card-style for the main content */
+    section.content {
+      max-width: 900px;
+      margin-top: 40px;
+    }
+
+    /* Highlight the 0/10 Pain Zone labels */
+    strong {
+      color: var(--theme-color);
+    }
+  </style>
 </head>
 <body>
   <div id="app">🏃 Loading Training Data...</div>
@@ -27,5 +67,8 @@
 
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-mermaid@latest/dist/docsify-mermaid.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
 </body>
 </html>

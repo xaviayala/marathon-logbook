@@ -13,6 +13,13 @@ This is an open-source performance laboratory documenting the intersection of **
 * **The Constraint:** Zero injury. Non-negotiable: Pain Score must remain strictly at **3/10 or lower** at all times.
 * **Weight Status:** **-10kg** achieved (focus shifted to power-to-weight efficiency).
 
+### 📈 Volume vs. Pain (Last 7 Days)
+```mermaid
+graph LR
+    Mon(8km - 0/10) --> Tue(Core) --> Wed(12km - 0/10) --> Thu(Core) --> Fri(Rest) --> Sat(15km - 1/10) --> Sun(22km - 0/10)
+    style Sun fill:#FF3E3E,stroke:#fff,stroke-width:2px;
+
+
 ## 🗓️ The "Durability" Training Split
 To protect a 45+ frame while building a sub-3:15 engine, the week is split between **High-Output** and **Structural Loading**:
 
