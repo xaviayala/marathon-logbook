@@ -7,7 +7,7 @@
 - **Target Pace:** ____ min/km
 - **Actual Pace:** ____ min/km
 - **Avg Heart Rate:** ____ bpm
-- **Shoe Rotation:** [e.g., Alphafly / Saucony Endorphin]
+- **Shoe Rotation:** [e.g., Nike Alphafly / Nike Pegasus 41]
 - **Surface:** [Road / Technogym Treadmill]
 
 ## 🧘 Structural Integrity (The "Pain-Free" Proof)

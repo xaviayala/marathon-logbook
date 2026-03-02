@@ -1,37 +1,55 @@
 import os
 import pandas as pd
 import time
+import sys
 from google import genai
 from dotenv import load_dotenv
 
-# 1. AUTHENTICATION & CLIENT SETUP
+# ---------------------------------
+# 1. PATH RESOLUTION (The Sub-3:15 Standard)
+# ---------------------------------
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
+
+# New Target: Inside /docs/logs/detailed
+DOCS_DIR = os.path.join(PROJECT_ROOT, 'docs')
+DATA_PATH = os.path.join(PROJECT_ROOT, 'data', 'processed_logbook.csv')
+OUTPUT_DIR = os.path.join(DOCS_DIR, 'logs', 'detailed')
+
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+# ---------------------------------
+# 2. AUTHENTICATION & CLIENT SETUP
+# ---------------------------------
 load_dotenv() 
 api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
     print("❌ ERROR: No API Key found in .env.")
-    exit()
+    sys.exit(1)
 
 client = genai.Client(api_key=api_key)
 
 # Clinical System Instruction
 system_instruction = (
     "You are a professional Sports Performance Analyst. Your tone is brutally honest, "
-    "clinical, and data-driven. Analyze logs for a 40+ year old runner aiming for a "
-    "sub-3:15 marathon in Barcelona. Focus on metabolic efficiency and structural integrity. "
-    "Use professional terminology like 'cardiovascular drift' and 'mechanical efficiency'. "
+    "clinical, and data-driven. Analyze logs for a 45+ year old runner aiming for a "
+    "sub-3:15 marathon. Focus on metabolic efficiency and structural integrity. "
     "Always use the metric system (km)."
 )
 
-# 2. DIRECTORIES & DATA LOAD
-output_dir = 'logs/detailed'
-os.makedirs(output_dir, exist_ok=True)
+# ---------------------------------
+# 3. DATA LOAD & TEMPLATE
+# ---------------------------------
+if not os.path.exists(DATA_PATH):
+    print(f"❌ ERROR: {DATA_PATH} not found.")
+    sys.exit(1)
 
-df = pd.read_csv('data/processed_logbook.csv')
+df = pd.read_csv(DATA_PATH)
 df['Date'] = pd.to_datetime(df['Date'])
+# Filter for your specific research window
 df = df[(df['Date'] >= '2025-09-01') & (df['Date'] <= '2026-03-01')]
 
-# 3. MARKDOWN TEMPLATE
 detailed_tpl = """# 🏃 Session: {title}
 **Date:** {date}
 **Phase:** {phase}
@@ -57,19 +75,22 @@ detailed_tpl = """# 🏃 Session: {title}
 - [x] Soleus Isometrics scheduled (Mon/Tue/Fri)
 """
 
+# ---------------------------------
 # 4. PROCESSING LOOP
+# ---------------------------------
 print(f"🔄 Resuming analysis. Checking {len(df)} possible sessions...")
 
 for index, row in df.iterrows():
     date_str = row['Date'].strftime('%Y-%m-%d')
     file_name = f"{date_str}-run.md"
-    file_path = os.path.join(output_dir, file_name)
+    file_path = os.path.join(OUTPUT_DIR, file_name)
     
-    # --- SKIP IF ALREADY GENERATED ---
+    # SKIP IF ALREADY GENERATED
     if os.path.exists(file_path):
         continue
 
-    if row['Distance'] < 2 and "Cycling" in str(row['Activity Type']):
+    # Filter out non-running activities
+    if row['Distance'] < 2 or "Cycling" in str(row['Activity Type']):
         continue
 
     prompt = (
@@ -83,14 +104,14 @@ for index, row in df.iterrows():
 
     while not success and retries < 3:
         try:
-            # Using the modern 3 Flash / 2.0 Flash architecture
             response = client.models.generate_content(
-                model='gemini-2.5-flash', # Adjust to your current active model string
+                model='gemini-2.5-flash',
                 contents=prompt,
                 config={'system_instruction': system_instruction}
             )
             ai_notes = response.text.strip()
             
+            # Logic for Phase and Targets
             phase = "Marathon Build-Up" if row['Date'] > pd.to_datetime('2026-01-01') else "Base Maintenance"
             target = "4:37" if row['Distance'] > 15 else "5:15"
             
@@ -103,17 +124,16 @@ for index, row in df.iterrows():
                 ai_notes=ai_notes
             )
 
-            with open(file_path, 'w') as f:
+            with open(file_path, 'w', encoding='utf-8') as f:
                 f.write(content)
             
             print(f"✅ Generated: {file_name}")
             success = True
-            # 10 seconds is the 'safe' baseline for batch free tier in 2026
-            time.sleep(10) 
+            time.sleep(10) # Protect Rate Limit
 
         except Exception as e:
             if "429" in str(e):
-                print(f"⚠️ Quota hit for {date_str}. Waiting 60s before retry...")
+                print(f"⚠️ Quota hit for {date_str}. Waiting 60s...")
                 time.sleep(60)
                 retries += 1
             else:

@@ -1,28 +1,48 @@
 name: Training Factory
+
 on:
   push:
     paths:
-      - 'data/*.csv'
+      # ONLY trigger when the actual training data is updated
+      - 'data/processed_logbook.csv'
+  workflow_dispatch: # Allows you to manually trigger from the GitHub "Actions" tab if needed
+
 jobs:
   run-analysis:
     runs-on: ubuntu-latest
+    # Prevent the bot from running on its own commits (infinite loop protection)
+    if: github.actor != 'github-actions[bot]'
+    
     steps:
       - uses: actions/checkout@v3
+        with:
+          # Fetch all history so git can commit back properly
+          fetch-depth: 0
+
       - name: Set up Python
         uses: actions/setup-python@v4
-        with: { python-version: '3.10' }
+        with: 
+          python-version: '3.10'
+          cache: 'pip' # Speeds up subsequent runs
+
       - name: Install Tools
-        run: pip install pandas google-generativeai
+        run: |
+          pip install pandas google-generativeai python-dotenv
+
       - name: Generate Reports
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          python scripts/generate_markdowns.py
-          python scripts/generate_report.py
+          # We run the dashboard first, then the audit which triggers the UI Manager
+          python scripts/build-dashboard.py
+          python scripts/build-performance-audit.py
+
       - name: Save to Web
         run: |
           git config --global user.name "Training Bot"
           git config --global user.email "bot@github.com"
-          git add .
-          git commit -m "Automated update: $(date +'%Y-%m-%d')" || exit 0
+          
+          git add docs/
+          
+          git commit -m "🚀 Lab Update: $(date +'%Y-%m-%d %H:%M')" || exit 0
           git push
