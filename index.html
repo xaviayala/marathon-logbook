@@ -5,9 +5,18 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
 </head>
 <body>
-  <div id="app">Loading...</div>
+  <div id="app">Loading your progress...</div>
   <script>
-    window.$docsify = { name: 'Marathon Lomgbook', loadSidebar: true, subMaxLevel: 2 }
+    window.$docsify = {
+      name: 'Sub-1:15 & Sub-3:15 Logbook',
+      loadSidebar: true,    // Look for _sidebar.md
+      subMaxLevel: 2,       // Show headers (##) in the sidebar
+      auto2top: true,       // Scroll to top when changing pages
+      // CRITICAL: This alias ensures the sidebar works when you are inside a log folder
+      alias: {
+        '/.*/_sidebar.md': '/_sidebar.md'
+      }
+    }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
 </body>
