@@ -15,7 +15,17 @@ This is an open-source performance laboratory documenting the intersection of **
 
 ## 📊 Sunday Training Forecast
 
-```mermaid```
+```mermaid
+graph LR
+    Mon["Mon (Core)"] --> Tue["Tue (Rest)"]
+    Tue --> Wed["Wed (Run)"]
+    Wed --> Thu["Thu (Core)"]
+    Thu --> Fri["Fri (Rest)"]
+    Fri --> Sat["Sat (Run)"]
+    Sat --> Sun["Sun (TBD km)"]
+    Sun --> Mon
+    style Sun fill:#FCA311,stroke:#fff,stroke-width:2px;
+```
 
 ## 🗓️ The "Durability" Training Split
 To protect a 45+ frame while building a sub-3:15 engine, the week is split between **High-Output** and **Structural Loading**:
