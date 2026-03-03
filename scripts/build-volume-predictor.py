@@ -67,14 +67,16 @@ graph LR
     style Sun fill:{color},stroke:#fff,stroke-width:2px;
 """
     # Replace content between markers
+   
     pattern = r"[\s\S]*?"
+    
     if re.search(pattern, content):
-        updated_content = re.sub(pattern, new_chart, content)
+        updated_content = re.sub(pattern, new_chart, content) # use 'new_chart' from your f-string
         with open(README_PATH, 'w') as f:
             f.write(updated_content)
         print("🏠 README.md chart updated successfully.")
     else:
-        print("⚠️ Warning: Markers not found. Updating entire file (check README for syntax).")
+        print("⚠️ Warning: Markers not found. Check README.md for ")
 
-    if __name__ == "__main__":
-        predict_sunday_volume()
+if __name__ == "__main__":
+    predict_sunday_volume()
